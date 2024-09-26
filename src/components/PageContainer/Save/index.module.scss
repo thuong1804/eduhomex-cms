@@ -1,0 +1,40 @@
+.save-page {
+    .save-page-form{
+        --height: 212px;
+        overflow: auto;
+
+        &.has-tabs{
+            --height: 290px;
+        }
+
+        &.disable-action {
+            --height: 132px;
+        }
+
+        &.has-tabs-disable-action {
+            --height: 210px;
+        }
+
+        height: calc(100vh - var(--height));
+    }
+    .action-bar {
+        position: relative;
+        margin-top: 16px;
+        background: #fff;
+        padding: 16px 24px;
+        text-align: right;
+        button {
+            min-width: 100px;
+        }
+        button + button,
+        a + button {
+            margin-left: 10px;
+        }
+    }
+
+    .page-title{
+        text-transform: uppercase;
+        font-size: 14px;
+        margin: 0 0 16px;
+    }
+}

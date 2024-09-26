@@ -1,0 +1,14 @@
+.root {
+    padding: 16px;
+    background-color: #fff;
+
+    .action {
+        margin: 16px 0;
+    }
+
+    .action-column {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

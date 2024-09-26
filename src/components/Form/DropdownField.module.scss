@@ -1,0 +1,16 @@
+.select-tags-as-text {
+    [class~="ant-select-selection-item"] {
+        border: none;
+        background-color: transparent;
+    }
+
+    [class~="ant-select-selection-overflow-item-suffix"] {
+        width: 0;
+    }
+
+    .tags-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+}

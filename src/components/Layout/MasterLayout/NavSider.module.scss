@@ -1,0 +1,16 @@
+@import "@/assets/scss/variables.scss";
+
+.nav-sider {
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    z-index: 2;
+    
+    .logo {
+        height: $heighAppHeader;
+        background: #002140;
+        display: flex;
+        justify-content: center;
+    }
+}
