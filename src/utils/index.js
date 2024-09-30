@@ -110,9 +110,9 @@ export const mappingDropdownData = (options = [], cb) => {
 };
 
 export const getRedirectUrlByRole = (role) => {
-    if ([userRoles.ADMIN].includes(role)) return paths.schoolList;
+    if ([userRoles.ADMIN].includes(role)) return paths.eduhomeList;
 
-    return paths.schoolList;
+    return paths.eduhomeList;
 };
 
 export const flatten = (data = []) => {

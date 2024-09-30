@@ -1,7 +1,7 @@
 import React from "react";
 
 import paths from "./paths";
-import schoolIcon from "@/assets/images/school.svg";
+import schoolIcon from "@/assets/images/box.svg";
 
 const navMenuConfig = [
     {

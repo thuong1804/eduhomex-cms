@@ -5,7 +5,9 @@ import navMenuConfig from '@/constants/menuConfig';
 import routes from '@/routes/routes';
 import { findNestedObj } from '@/utils';
 
-import logoSmallUrl from '@/assets/images/logo.svg';
+import logoSmallUrl from '@/assets/images/logoSmall.svg';
+import logo from '@/assets/images/logo.svg';
+
 
 import styles from './NavSider.module.scss';
 
@@ -97,10 +99,10 @@ const NavSider = ({
             onCollapse={onToggleNavSide}
             className={styles.navSider}
         >
-            <Link to={"/"}>
+            <Link to={"/eduhome"}>
                 <div className={styles.logo}>
-                    <img style={{ width: navSiderCollapsed ? 40 : 80 }}
-                        src={navSiderCollapsed ? logoSmallUrl : logoSmallUrl} alt="logo" />
+                    <img style={{ width: navSiderCollapsed ? 30 : 80 }}
+                        src={navSiderCollapsed ? logoSmallUrl : logo} alt="logo" />
                 </div>
             </Link>
             <Menu

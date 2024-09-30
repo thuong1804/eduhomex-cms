@@ -9,7 +9,6 @@ import { getRedirectUrlByRole } from "@/utils";
 
 const RootRoutes = () => {
     const { isAuthenticated, userRole } = useAuth();
-    console.log({routes})
     return (
         <BrowserRouter>
             <Routes>
