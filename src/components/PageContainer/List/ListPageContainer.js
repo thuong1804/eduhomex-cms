@@ -26,8 +26,8 @@ const ListPageContainer = ({
     onGetListSuccess,
     classNames = {},
     searchForm,
-    showToastCustom,
-    tableProps = {}
+    tableProps = {},
+    getMessages,
 }) => {
     const prepareColumns = (columns, actionColumn) => {
         if (Object.keys(actionBar).length) {
@@ -50,7 +50,7 @@ const ListPageContainer = ({
                                 key={3}
                                 dataRow={dataRow}
                                 action={updateStatusAction}
-                                showToastCustom={showToastCustom}
+                                getMessages={getMessages}
                             />
                         );
                     }
@@ -60,6 +60,7 @@ const ListPageContainer = ({
                                 key={2}
                                 dataRow={dataRow}
                                 action={deleteAction}
+                                getMessages={getMessages}
                             />
                         );
                     }

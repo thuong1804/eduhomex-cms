@@ -9,15 +9,23 @@ import { UnlockOutlined, LockOutlined } from "@ant-design/icons";
 
 const { confirm } = Modal;
 
-function UpdateStatusAction({ dataRow, onClick, action, showToastCustom, ...props }) {
+function UpdateStatusAction({ dataRow, onClick, action, getMessages, ...props }) {
     const dispatch = useDispatch();
     const { dataRowKey, objectName, getList } = useListPageContext();
     const { showSuccessMessage, showErrorMessage } = useNotification();
     const { status } = dataRow;
 
+    const defaultMessages = {
+        updateStatusTitle: `Bạn có chắc muốn ${status === commonStatus.ACTIVE ? "khóa" : "kích hoạt"} ${objectName} này?`,
+        updateStatusSuccess: `${isActive ? "Khoá" : "Kích hoạt"} ${objectName} thành công!`,
+        updateStatusError: `${isActive ? "Khoá" : "Kích hoạt"} ${objectName} thất bại. Vui lòng thử lại!`,
+    }
+
+    const messages = getMessages ? getMessages(defaultMessages, dataRow, isActive) : defaultMessages;
+
     const onConfirmUpdateStatus = (id) => {
         confirm({
-            title: `Bạn có chắc muốn ${status === commonStatus.ACTIVE ? "khóa" : "kích hoạt"} ${objectName} này?`,
+            title: messages.updateStatusTitle,
             content: "",
             okText: "Xác nhận",
             okType: "danger",
@@ -40,16 +48,14 @@ function UpdateStatusAction({ dataRow, onClick, action, showToastCustom, ...prop
                     },
                     onCompleted: () => {
                         showToastCustom ? (
-                            showSuccessMessage(showToastCustom)
+                            showSuccessMessage(renderCustomMsg(objectName, condition))
                         ) : (
-                            showSuccessMessage(`${isActive ? "Khoá" : "Kích hoạt"} ${objectName} thành công!`)
+                            showSuccessMessage(messages.updateStatusSuccess)
                         )
                         getList();
                     },
                     onError: (err) => {
-                        showErrorMessage(
-                            `${isActive ? "Khoá" : "Kích hoạt"} ${objectName} thất bại. Vui lòng thử lại!`
-                        );
+                        showErrorMessage(messages.updateStatusError);
                     },
                 })
             );
