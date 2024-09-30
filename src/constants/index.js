@@ -16,8 +16,6 @@ export const DATE_FORMAT_VALUE = "YYYY-MM-DD";
 export const DATETIME_FORMAT_VALUE = "YYYY-MM-DD HH:mm:ss";
 export const DATETIME_FORMAT_DISPLAY = "DD/MM/YYYY HH:mm";
 
-export const typeItestResource = 'PRACTICE_TEST'
-
 export const storageKeys = {
     ACCESS_TOKEN: process.env.REACT_APP_ACCESS_TOKEN_KEY,
     REFRESH_TOKEN: process.env.REACT_APP_REFRESH_TOKEN_KEY,
@@ -42,21 +40,7 @@ export const commonStatus = {
     LOCK: "LOCK",
 };
 
-export const commonStatusNotification = {
-    SCHEDULED: "SCHEDULED",
-    DELIVERED: "DELIVERED",
-};
-
-export const subjectType = {
-    EN: 'EN',
-}
-
-export const resourceType = {
-    ALL: "ALL",
-    ITEST : "ITEST",
-};
-
-export const sourceType ={
+export const sourceType = {
     DTP: 'DTP',
     MOET: 'MOET'
 }
@@ -93,7 +77,7 @@ export const CATEGORY_TEST = [
             {
                 value: 'Sách giáo khoa',
                 title: 'Sách giáo khoa',
-                
+
             },
             {
                 value: 'Giáo trình',
@@ -122,7 +106,7 @@ export const CATEGORY_TEST = [
                                 title: 'A1 Movers',
                             },
                             {
-                                value:  13,
+                                value: 13,
                                 title: 'A2 Flyers',
                             },
                         ],
@@ -270,7 +254,7 @@ export const CATEGORY_TEST = [
             {
                 value: 'Tuyển sinh lớp 10',
                 title: 'Tuyển sinh lớp 10',
-                
+
             },
             {
                 value: 'Tốt nghiệp THPT',
@@ -286,7 +270,7 @@ export const CATEGORY_TEST = [
             }
         ]
     },
-    
+
 
 ]
 
@@ -649,7 +633,6 @@ export const UT_LANGUAGE_CERT = {
         },
     ]
 }
-export const UNIT_TEST_INTERNATIONAL = [UT_CERT_CAMBRIDGE, UT_CERT_IELTS, UT_CERT_APTIS, UT_CERT_TOEFL, UT_CERT_TOEIC];
 
 export const UNIT_TEST_TYPE = [
     ...UNIT_TEST_INTERIOR,
@@ -659,82 +642,6 @@ export const UNIT_TEST_TYPE = [
     UT_CERT_TOEFL,
     UT_CERT_TOEIC,
 ];
-
-export const RESOURCE_TYPES_ITEST = [
-    {
-        label: 'Đề thi theo sách > Sách giáo khoa',
-        value: UNIT_TEST_INTERIOR.flatMap(item => item.options).flat(),
-        key: bookTypes.BOOK
-    },
-    {
-        label: 'Đề thi theo sách > Giáo trình',
-        value: UNIT_TEST_INTERIOR.flatMap(item => item.options).flat(),
-        key: bookTypes.SUPPLEMENTARY
-    },
-    {
-        label: 'Bài thi quốc tế > LanguageCert',
-        value: UT_LANGUAGE_CERT.options.flatMap(item => item.options),
-    },
-    {
-        label: 'Bài thi quốc tế > Cambridge',
-        value: UT_CERT_CAMBRIDGE.options.flatMap(value => value.options),
-    },
-    {
-        label: 'Bài thi quốc tế > IELTS',
-        value: UT_CERT_IELTS.options,
-    },
-    {
-        label: 'Bài thi quốc tế > APTIS',
-        value: UT_CERT_APTIS.options,
-    },
-    {
-        label: 'Bài thi quốc tế > TOEFL',
-        value: UT_CERT_TOEFL.options,
-    },
-    {
-        label: 'Bài thi quốc tế > TOEIC',
-        value: UT_CERT_TOEIC.options,
-    },
-    {
-        label: 'Bài thi trong nước > Tuyển sinh 10',
-        value: [{value: UT_NATIONAL_EXAM[0].value}]
-    },
-    {
-        label: 'Bài thi trong nước > Đánh giá năng lực',
-        value: [{value: UT_NATIONAL_EXAM[1].value}],
-    },
-    {
-        label: 'Bài thi trong nước > Tốt nghiệp THPT',
-        value: [{value: UT_NATIONAL_EXAM[2].value}],
-    },
-    {
-        label: 'Bài thi trong nước > VSTEP',
-        value: UT_NATIONAL_EXAM[3].options
-    },
-    {
-        label: 'Thi xếp lớp',
-        value: [{
-            value: 60,
-            label: 'Tiểu học'
-        }],
-    },
-    {
-        label: 'Thi xếp lớp',
-        value: [{
-            value: 61,
-            label: 'Tổng quát'
-        }],
-    },
-]
-
-
-
-export const orderStatus = {
-    SUCCESS: "SUCCESS",
-    FAILED: "FAILED",
-    PROCESSING: "PROCESSING",
-    CANCELLED: "CANCELLED",
-};
 
 export const typeScope = {
     SYSTEM: "SYSTEM",
