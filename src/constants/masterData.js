@@ -4,7 +4,6 @@ import {
     userRoles,
     typeScope,
     APPS,
-    skillTypes,
     typeEduhome,
 } from ".";
 
@@ -37,23 +36,3 @@ export const appsDDL = [
     { value: APPS.EDUHOME, label: "Eduhome" },
     { value: APPS.EDUFUN, label: "Edufun" },
 ];
-
-export const skillDDL = [
-    { value: skillTypes.PR, label: 'Pronunciation' },
-    { value: skillTypes.VO, label: 'Vocab' },
-    { value: skillTypes.GR, label: 'Grammar' },
-    { value: skillTypes.RE, label: 'Reading' },
-    { value: skillTypes.WR, label: 'Writing' },
-    { value: skillTypes.LI, label: 'Listening' },
-    { value: skillTypes.SP, label: 'Speaking' },
-]
-
-export const skillThumbnails = {
-    [skillTypes.GR]: '/images/skills/clt-grammar-green.png',
-    [skillTypes.LI]: '/images/skills/clt-listening-green.png',
-    [skillTypes.PR]: '/images/skills/clt-pronunciation-green.png',
-    [skillTypes.RE]: '/images/skills/clt-reading-green.png',
-    [skillTypes.SP]: '/images/skills/clt-speaking-green.png',
-    [skillTypes.VO]: '/images/skills/clt-vocab-green.png',
-    [skillTypes.WR]: '/images/skills/clt-writing-green.png',
-}
