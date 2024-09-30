@@ -47,11 +47,7 @@ function UpdateStatusAction({ dataRow, onClick, action, getMessages, ...props })
                         status: isActive ? commonStatus.LOCK : commonStatus.ACTIVE,
                     },
                     onCompleted: () => {
-                        showToastCustom ? (
-                            showSuccessMessage(renderCustomMsg(objectName, condition))
-                        ) : (
-                            showSuccessMessage(messages.updateStatusSuccess)
-                        )
+                        showSuccessMessage(messages.updateStatusSuccess)
                         getList();
                     },
                     onError: (err) => {
