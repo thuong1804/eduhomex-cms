@@ -15,6 +15,7 @@ function UpdateStatusAction({ dataRow, onClick, action, getMessages, ...props })
     const { showSuccessMessage, showErrorMessage } = useNotification();
     const { status } = dataRow;
 
+    const isActive = status === commonStatus.ACTIVE;
     const defaultMessages = {
         updateStatusTitle: `Bạn có chắc muốn ${status === commonStatus.ACTIVE ? "khóa" : "kích hoạt"} ${objectName} này?`,
         updateStatusSuccess: `${isActive ? "Khoá" : "Kích hoạt"} ${objectName} thành công!`,
@@ -39,7 +40,6 @@ function UpdateStatusAction({ dataRow, onClick, action, getMessages, ...props })
 
     const onUpdateStatus = (id) => {
         if (action) {
-            const isActive = status === commonStatus.ACTIVE;
             dispatch(
                 action({
                     params: {
