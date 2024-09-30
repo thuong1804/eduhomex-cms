@@ -64,7 +64,7 @@ function UpdateStatusAction({ dataRow, onClick, action, getMessages, ...props })
                 {...props}
                 type="link"
                 icon={
-                    dataRow.status === commonStatus.ACTIVE ? (
+                    isActive ? (
                         <LockOutlined />
                     ) : (
                         <UnlockOutlined style={{ color: "red" }} />
