@@ -11,7 +11,7 @@ const PublicLayout = ({ children }) => {
             <Header className={styles.appHeader}>
                 <div className={styles.container}>
                     <div className={styles.appLogo} >
-                        <img src={logoUrl} alt="App logo" />
+                        <img src={logoUrl} alt="App logo" className={styles.imgLogo}/>
                     </div>
                 </div>
             </Header>

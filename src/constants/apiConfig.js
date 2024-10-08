@@ -73,13 +73,6 @@ const apiConfig = {
         method: "GET",
         headers: baseHeader,
     },
-    resource: {
-        getList: {
-            path: `${cmsApiUrl}/cms/resources/eduhome-resources`,
-            method: "GET",
-            headers: baseHeader,
-        },
-    }
 };
 
 export default apiConfig;
