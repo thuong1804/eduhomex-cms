@@ -7,7 +7,7 @@ const navMenuConfig = [
     {
         label: "Eduhome",
         icon: <img src={schoolIcon} alt="" width={20}/>,
-        path: paths.eduhomeList,
+        path: paths.profile,
     },
 ];
 

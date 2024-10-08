@@ -1,7 +1,6 @@
 import paths from "@/constants/paths";
 import ProfilePage from "@/containers/profile";
 import Forbidden from "@/components/Forbidden";
-import Eduhome from "@/containers/resource/EduHomeListPage";
 
 const routes = [
     {
@@ -12,10 +11,6 @@ const routes = [
     {
         path: paths.profile,
         component: ProfilePage,
-    },
-    {
-        path: paths.eduhomeList,
-        component: Eduhome,
     },
 ];
 
