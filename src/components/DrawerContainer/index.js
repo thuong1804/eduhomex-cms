@@ -18,23 +18,17 @@ const DrawerContainer = ({
     searchFields,
     columns,
     title,
-    disableCheckboxSelected = false,
     form,
     objectName = '',
     actionGetList,
-    checkedId,
     submitAction,
     mappingGetListParams,
-    customDataSelect,
-    mappingRowDataProp,
     dataDetailChecked,
     customField,
     onOpenModalSuccess,
     onResetFormValue,
     customShowListSelectedAll,
-    customOnchangeForm,
     loading,
-    mappingSelectedData,
     ...props
 }) => {
     const dispatch = useDispatch();
@@ -57,13 +51,10 @@ const DrawerContainer = ({
 
     const onOpenModal = () => {
         setOpen(true);
-        // form.resetFields();
     };
 
     const onClose = () => {
         setOpen(false);
-        console.log('render')
-        // onResetForm();
         setCurrentPage(1);
     };
 
@@ -98,19 +89,14 @@ const DrawerContainer = ({
                 setSelected([]);
             }
         },
-        getCheckboxProps: (record) => ({
-            disabled: disableCheckboxSelected && checkedId?.includes(record.id),
-        }),
     };
 
     const handelTableChange = (pag) => {
         setCurrentPage(pag.current);
         setPageSize(pag.pageSize);
     };
+
     const handelClickRow = (rowData) => {
-        const mappingRowData = mappingRowDataProp
-            ? mappingRowDataProp(rowData)
-            : rowData;
         const idRow = rowData.id;
 
         const updateSelection = () => {
@@ -127,17 +113,11 @@ const DrawerContainer = ({
                     ? (prevData || []).filter(
                           (data) => (data.data?.id || data.id) !== rowData.id
                       )
-                    : [...(prevData || []), mappingRowData];
+                    : [...(prevData || []), rowData];
             });
         };
 
-        if (disableCheckboxSelected) {
-            if (!checkedId?.includes(idRow)) {
-                updateSelection();
-            }
-        } else {
-            updateSelection();
-        }
+        return updateSelection();
     };
 
     const onSubmitSearch = (value) => {
@@ -150,6 +130,23 @@ const DrawerContainer = ({
         }
         setCurrentPage(1);
     };
+
+    const onClickShowSelectedAll = (e) => {
+        setCurrentPage(1);
+        setIsShowSelectedAll(e.target.checked)
+        if (customShowListSelectedAll) {
+            setSelectedShowOnly(customShowListSelectedAll)
+        } else {
+            const mappingList = listSelecteds.map(item => item.data || item)
+            setSelectedShowOnly(mappingList)
+        }
+    }
+
+    const handelSubmitAction = () => {
+        submitAction();
+        setCurrentPage(1);
+        setOpen(false);
+    }
 
     useEffect(() => {
         setLoadingTable(true);
@@ -172,31 +169,25 @@ const DrawerContainer = ({
             );
         }
     }, [open, filterPayload, currentPage, actionGetList]);
-    
-
-    const onClickShowSelectedAll = (e) => {
-        setCurrentPage(1);
-        setIsShowSelectedAll(e.target.checked)
-        if (customShowListSelectedAll) {
-            setSelectedShowOnly(customShowListSelectedAll)
-        } else {
-            const mappingList = listSelecteds.map(item => item.data || item)
-            setSelectedShowOnly(mappingList)
-        }
-    }
-
-    useEffect(() => {
-        if (customShowListSelectedAll) setSelectedShowOnly(customShowListSelectedAll)
-    }, [actionGetList, open])
 
     useEffect(() => {
         if (!customShowListSelectedAll) {
             const mappingList = listSelecteds.map(item => item.data || item)
             setSelectedShowOnly(mappingList)
+        } else {
+            setSelectedShowOnly(customShowListSelectedAll)
         }
-        if (checkedId) setKeySelected(checkedId);
-        if (dataDetailChecked?.length > 0) setSelected(dataDetailChecked);
-        if (open) onOpenModalSuccess?.(open)
+    }, [actionGetList, open])
+    
+    useEffect(() => {
+        if (open) {
+            if (dataDetailChecked?.length > 0) {
+                const dataDeTailIds = dataDetailChecked.map(item => item.data?.id || item.id)
+                setKeySelected(dataDeTailIds)
+                setSelected(dataDetailChecked);
+            } 
+            onOpenModalSuccess?.(open)
+        }
     }, [open]);
 
     useEffect(() => {
@@ -220,11 +211,7 @@ const DrawerContainer = ({
                         <Button
                             type="primary"
                             htmlType="button"
-                            onClick={() => {
-                                submitAction();
-                                setCurrentPage(1);
-                                setOpen(false);
-                            }}
+                            onClick={() => handelSubmitAction()}
                         >
                             Chọn
                         </Button>
@@ -273,7 +260,7 @@ const DrawerContainer = ({
                             pagination={{
                                 current: currentPage,
                                 total: isShowSelectedAll ? seletedShowOnly.length : data.totalElements,
-                                pageSize: 10,
+                                pageSize: pageSize,
                             }}
                             rowKey={"id"}
                         />
