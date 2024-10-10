@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Button, Checkbox, Col, Drawer, Form, Row, Table } from "antd";
 import { useDispatch } from "react-redux";
 
@@ -23,6 +23,7 @@ const DrawerContainer = ({
     actionGetList,
     submitAction,
     mappingGetListParams,
+    mappingRowDataProp,
     dataDetailChecked,
     customField,
     onOpenModalSuccess,
@@ -41,13 +42,17 @@ const DrawerContainer = ({
     const [listSelecteds, setListSelecteds] = useState([]);
     const [isShowSelectedAll, setIsShowSelectedAll] = useState(false)
     const [seletedShowOnly, setSelectedShowOnly] = useState([])
+    
+    const selectedId = useMemo(() => {
+        return seletedShowOnly.map(item => item.id);
+    }, [seletedShowOnly]);
 
-    const onResetForm = () => {
+    const onResetForm = useCallback(() => {
         form.resetFields();
         setFilterPayload({});
-        onResetFormValue?.(form)
+        onResetFormValue?.(form);
         setCurrentPage(1);
-    };
+    }, [form, onResetFormValue]);
 
     const onOpenModal = () => {
         setOpen(true);
@@ -95,8 +100,11 @@ const DrawerContainer = ({
         setCurrentPage(pag.current);
         setPageSize(pag.pageSize);
     };
-
+    
     const handelClickRow = (rowData) => {
+        const mappingRowData = mappingRowDataProp
+            ? mappingRowDataProp(rowData)
+            : rowData;
         const idRow = rowData.id;
 
         const updateSelection = () => {
@@ -113,7 +121,7 @@ const DrawerContainer = ({
                     ? (prevData || []).filter(
                           (data) => (data.data?.id || data.id) !== rowData.id
                       )
-                    : [...(prevData || []), rowData];
+                    : [...(prevData || []), mappingRowData];
             });
         };
 
@@ -124,16 +132,13 @@ const DrawerContainer = ({
         const cleanSubmitValue = cleanObject({ ...value });
         setFilterPayload(cleanSubmitValue);
         const filterParams = mappingGetListParams?.(value);
-
         if (mappingGetListParams) {
             setFilterPayload(filterParams);
         }
         setCurrentPage(1);
     };
 
-    const onClickShowSelectedAll = (e) => {
-        setCurrentPage(1);
-        setIsShowSelectedAll(e.target.checked)
+    const handelShowListSelectedAll = () => {
         if (customShowListSelectedAll) {
             setSelectedShowOnly(customShowListSelectedAll)
         } else {
@@ -142,10 +147,10 @@ const DrawerContainer = ({
         }
     }
 
-    const handelSubmitAction = () => {
-        submitAction();
+    const onClickShowSelectedAll = (e) => {
         setCurrentPage(1);
-        setOpen(false);
+        setIsShowSelectedAll(e.target.checked)
+        handelShowListSelectedAll();
     }
 
     useEffect(() => {
@@ -157,6 +162,7 @@ const DrawerContainer = ({
                         page: currentPage - 1,
                         size: 10,
                         ...filterPayload,
+                        selectedIds: isShowSelectedAll ? selectedId : []
                     },
                     onCompleted: (res) => {
                         setData(res.data || []);
@@ -168,15 +174,10 @@ const DrawerContainer = ({
                 })
             );
         }
-    }, [open, filterPayload, currentPage, actionGetList]);
+    }, [open, filterPayload, currentPage, actionGetList, isShowSelectedAll, seletedShowOnly]);
 
     useEffect(() => {
-        if (!customShowListSelectedAll) {
-            const mappingList = listSelecteds.map(item => item.data || item)
-            setSelectedShowOnly(mappingList)
-        } else {
-            setSelectedShowOnly(customShowListSelectedAll)
-        }
+        handelShowListSelectedAll()
     }, [actionGetList, open])
     
     useEffect(() => {
@@ -211,7 +212,11 @@ const DrawerContainer = ({
                         <Button
                             type="primary"
                             htmlType="button"
-                            onClick={() => handelSubmitAction()}
+                            onClick={() => {
+                                submitAction();
+                                setCurrentPage(1);
+                                setOpen(false);
+                            }}
                         >
                             Chọn
                         </Button>
@@ -238,13 +243,13 @@ const DrawerContainer = ({
                     <Checkbox
                         checked={isShowSelectedAll}
                         onClick={onClickShowSelectedAll}>
-                        Hiển thị tất cả {objectName} được chọn
+                            Hiển thị tất cả {objectName} được chọn
                     </Checkbox>
                     <Col span={24}>
                         <Table
                             onChange={handelTableChange}
                             loading={loadingTable}
-                            dataSource={isShowSelectedAll ? seletedShowOnly : (data.content || data)}
+                            dataSource={(data.content || data)}
                             columns={columns}
                             onRow={(rowData) => ({
                                 onClick: () => handelClickRow(rowData),
@@ -259,8 +264,8 @@ const DrawerContainer = ({
                             }}
                             pagination={{
                                 current: currentPage,
-                                total: isShowSelectedAll ? seletedShowOnly.length : data.totalElements,
-                                pageSize: pageSize,
+                                total: data.totalElements,
+                                pageSize: 10,
                             }}
                             rowKey={"id"}
                         />
